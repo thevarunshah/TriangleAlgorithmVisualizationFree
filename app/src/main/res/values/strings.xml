@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name"><b>Triangle Algorithm Visualization (Free)</b></string>
+    <string name="basic_vis">Basic Visualization</string>
+    <string name="gradient_vis">Gradient Visualization</string>
+
+    <string name="basic">Basic</string>
+    <string name="gradient">Gradient</string>
+    <string name="about">About</string>
+
+    <string name="done_verticies">Done Adding Verticies</string>
+    <string name="save_image">Save Image</string>
+    <string name="reset">Reset</string>
+    <string name="add">Add</string>
+    <string name="x">X:</string>
+    <string name="y">Y:</string>
+    <string name="reset_p">Reset p</string>
+
+    <string name="display_bisectors">Display Bisectors</string>
+    <string name="display_ch">Display Convex Hull</string>
+
+    <string name="gradient_color">Gradient Color</string>
+    <string name="green">Green</string>
+    <string name="red">Red</string>
+    <string name="blue">Blue</string>
+    <string name="yellow">Yellow</string>
+
+    <string name="about_message">More information on the Triangle Algorithm can be found in the original paper by
+        \n<b><a href="https://www.cs.rutgers.edu/~kalantar/">Bahman Kalantari</a>: </b>
+        <i>\"A Characterization Theorem and An Algorithm for A Convex Hull Problem\"</i>
+        \n\nApp created by: <b>Varun Shah</b>
+        \nSpecial thanks to Professor Kalantari for his input!
+        \n\nEnjoying the free version of this app?
+        Consider purchasing the full version to access features like saving HQ images, choosing different gradient colors, and much more!
+        \nIf you find this app useful, please take a moment to rate it.
+        \nThank you!
+        \n\n<font size="12">Copyright 2017 Varun Shah</font>
+        \n<font size="10">Licensed under the Apache License, Version 2.0 (the \'License\')</font>
+    </string>
+
+    <string name="purchase_message">This is a paid feature only.
+        \nConsider purchasing the full version to access features like saving HQ images, choosing different gradient colors, and much more!
+    </string>
+
+    <string-array name="coordinates">
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
+        <item>600</item>
+        <item>700</item>
+        <item>800</item>
+        <item>900</item>
+    </string-array>
+</resources>

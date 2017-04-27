@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="@string/gradient_color"
+        app:showAsAction="never">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/green"
+                    android:title="@string/green"
+                    android:checked="true"/>
+                <item
+                    android:id="@+id/red"
+                    android:title="@string/red" />
+                <item
+                    android:id="@+id/blue"
+                    android:title="@string/blue" />
+                <item
+                    android:id="@+id/yellow"
+                    android:title="@string/yellow" />
+            </group>
+        </menu>
+    </item>
+    <group android:checkableBehavior="all">
+        <item
+            android:id="@+id/convex_hull"
+            android:title="@string/display_ch"/>
+    </group>
+</menu>
