@@ -22,6 +22,7 @@ This application is an implementation of the Triangle Algorithm in 2D, designed 
 # Google Play
 
 Download: https://play.google.com/store/apps/details?id=com.thevarunshah.trianglealgorithmvisualization 
+
 Trial/Free Version: https://play.google.com/store/apps/details?id=com.thevarunshah.trianglealgorithmvisualization.free
 
 # Copyright
