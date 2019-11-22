@@ -1,15 +1,8 @@
 package com.thevarunshah.trianglealgorithmvisualization.free;
 
-import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import android.text.method.LinkMovementMethod;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,13 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.thevarunshah.trianglealgorithmvisualization.free.backend.Point;
+import com.thevarunshah.trianglealgorithmvisualization.free.backend.VerifyPermissions;
 
 public class BasicVisualization extends AppCompatActivity {
 
     protected static boolean verticesDone = false;
+    protected static boolean displayBisectors = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +43,12 @@ public class BasicVisualization extends AppCompatActivity {
         saveImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                displayBuyDialog();
+                VerifyPermissions.verifyStoragePermissions(BasicVisualization.this);
+                saveImageButton.setAlpha(0.5f);
+                saveImageButton.setClickable(false);
+                BasicDrawingView.SaveImageTask task = new BasicDrawingView.SaveImageTask(basicVisualization.getContext(), saveImageButton);
+                task.execute();
+                Snackbar.make(basicVisualization, "Your image has been saved!", Snackbar.LENGTH_LONG).show();
             }
         });
 
@@ -124,6 +123,8 @@ public class BasicVisualization extends AppCompatActivity {
                 }
             }
         });
+
+        VerifyPermissions.verifyStoragePermissions(this);
     }
 
     @Override
@@ -138,61 +139,14 @@ public class BasicVisualization extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.disply_bisectors:
-                displayBuyDialog();
+                displayBisectors = !displayBisectors;
+                item.setChecked(!item.isChecked());
+                BasicDrawingView.updateCanvas(true);
                 return true;
             case android.R.id.home:
                 this.finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * prompt user to buy the app
-     */
-    private void displayBuyDialog(){
-
-        //inflate layout with customized alert dialog view
-        LayoutInflater layoutInflater = LayoutInflater.from(BasicVisualization.this);
-        final View dialog = layoutInflater.inflate(R.layout.info_dialog, null);
-        final AlertDialog.Builder infoDialogBuilder = new AlertDialog.Builder(BasicVisualization.this);
-
-        //customize alert dialog and set its view
-        infoDialogBuilder.setTitle("Paid Feature");
-        infoDialogBuilder.setIcon(R.drawable.ic_info_black_24dp);
-        infoDialogBuilder.setView(dialog);
-
-        //fetch textview and set its text
-        final TextView message = (TextView) dialog.findViewById(R.id.info_dialog);
-        message.setText(R.string.purchase_message);
-        message.setMovementMethod(LinkMovementMethod.getInstance());
-
-        //set up actions for dialog buttons
-        infoDialogBuilder.setPositiveButton("BUY", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int whichButton) {
-
-                String appPackageName = "com.thevarunshah.trianglealgorithmvisualization";
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                try{
-                    i.setData(Uri.parse("market://details?id=" + appPackageName));
-                    startActivity(i);
-                } catch(ActivityNotFoundException e){
-                    try{
-                        i.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName));
-                        startActivity(i);
-                    } catch (ActivityNotFoundException e2){
-                        Snackbar errorBar = Snackbar.make(findViewById(R.id.basic_visualization_activity),
-                                "Could not launch the Google Play app.", Snackbar.LENGTH_SHORT);
-                        errorBar.show();
-                    }
-                }
-            }
-        });
-        infoDialogBuilder.setNegativeButton("DISMISS", null);
-
-        //create and show the dialog
-        AlertDialog infoDialog = infoDialogBuilder.create();
-        infoDialog.show();
     }
 }

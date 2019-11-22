@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name"><b>Triangle Algorithm Visualization (Free)</b></string>
+    <string name="app_name"><b>Triangle Algorithm Visualization</b></string>
     <string name="basic_vis">Basic Visualization</string>
     <string name="gradient_vis">Gradient Visualization</string>
 
@@ -29,27 +29,30 @@
         <i>\"A Characterization Theorem and An Algorithm for A Convex Hull Problem\"</i>
         \n\nApp created by: <b>Varun Shah</b>
         \nSpecial thanks to Professor Kalantari for his input!
-        \n\nEnjoying the free version of this app?
-        Consider purchasing the full version to access features like saving HQ images, choosing different gradient colors, and much more!
-        \nIf you find this app useful, please take a moment to rate it.
-        \nThank you!
+        \n\nIf you find this app useful, please take a moment to rate it.\nThank you!
         \n\n<font size="12">Copyright 2017 Varun Shah</font>
         \n<font size="10">Licensed under the Apache License, Version 2.0 (the \'License\')</font>
     </string>
 
-    <string name="purchase_message">This is a paid feature only.
-        \nConsider purchasing the full version to access features like saving HQ images, choosing different gradient colors, and much more!
-    </string>
-
     <string-array name="coordinates">
+        <item>50</item>
         <item>100</item>
+        <item>150</item>
         <item>200</item>
+        <item>250</item>
         <item>300</item>
+        <item>350</item>
         <item>400</item>
+        <item>450</item>
         <item>500</item>
+        <item>550</item>
         <item>600</item>
+        <item>650</item>
         <item>700</item>
+        <item>750</item>
         <item>800</item>
+        <item>850</item>
         <item>900</item>
+        <item>950</item>
     </string-array>
 </resources>

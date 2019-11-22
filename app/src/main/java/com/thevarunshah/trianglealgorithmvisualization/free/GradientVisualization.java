@@ -1,16 +1,9 @@
 package com.thevarunshah.trianglealgorithmvisualization.free;
 
-import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import android.text.method.LinkMovementMethod;
 import android.util.SparseArray;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,10 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.thevarunshah.trianglealgorithmvisualization.free.backend.ConvexHull;
 import com.thevarunshah.trianglealgorithmvisualization.free.backend.Point;
+import com.thevarunshah.trianglealgorithmvisualization.free.backend.VerifyPermissions;
 
 import java.util.List;
 
@@ -37,7 +30,7 @@ public class GradientVisualization extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        final RelativeLayout gradientVisualization = (RelativeLayout) findViewById(R.id.gradient_visualization_activity);
+        final RelativeLayout gradientVisualization = (RelativeLayout) findViewById(R.id.full_gradient_visualization_activity);
         Snackbar.make(gradientVisualization, "Draw vertices and then press done above.", Snackbar.LENGTH_LONG).show();
 
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(1000, 1000);
@@ -53,7 +46,12 @@ public class GradientVisualization extends AppCompatActivity {
         saveImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                displayBuyDialog();
+                VerifyPermissions.verifyStoragePermissions(GradientVisualization.this);
+                saveImage.setAlpha(0.5f);
+                saveImage.setClickable(false);
+                GradientDrawingView.SaveImageTask task = new GradientDrawingView.SaveImageTask(gradientVisualization.getContext(), saveImage);
+                Snackbar.make(gradientVisualization, "Your image is being generated and will be saved soon!", Snackbar.LENGTH_LONG).show();
+                task.execute();
             }
         });
 
@@ -106,6 +104,8 @@ public class GradientVisualization extends AppCompatActivity {
                 }
             }
         });
+
+        VerifyPermissions.verifyStoragePermissions(this);
     }
 
     @Override
@@ -122,13 +122,11 @@ public class GradientVisualization extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.green:
             case R.id.red:
+            case R.id.blue:
+            case R.id.yellow:
                 item.setChecked(true);
                 GradientDrawingView.checkedItem = item.getItemId();
                 GradientDrawingView.updateCanvas(GradientDrawingView.prevIterationsMap);
-                return true;
-            case R.id.blue:
-            case R.id.yellow:
-                displayBuyDialog();
                 return true;
             case R.id.convex_hull:
                 item.setChecked(!item.isChecked());
@@ -142,54 +140,5 @@ public class GradientVisualization extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * prompt user to buy the app
-     */
-    private void displayBuyDialog(){
-
-        //inflate layout with customized alert dialog view
-        LayoutInflater layoutInflater = LayoutInflater.from(GradientVisualization.this);
-        final View dialog = layoutInflater.inflate(R.layout.info_dialog, null);
-        final AlertDialog.Builder infoDialogBuilder = new AlertDialog.Builder(GradientVisualization.this);
-
-        //customize alert dialog and set its view
-        infoDialogBuilder.setTitle("Paid Feature");
-        infoDialogBuilder.setIcon(R.drawable.ic_info_black_24dp);
-        infoDialogBuilder.setView(dialog);
-
-        //fetch textview and set its text
-        final TextView message = (TextView) dialog.findViewById(R.id.info_dialog);
-        message.setText(R.string.purchase_message);
-        message.setMovementMethod(LinkMovementMethod.getInstance());
-
-        //set up actions for dialog buttons
-        infoDialogBuilder.setPositiveButton("BUY", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int whichButton) {
-
-                String appPackageName = "com.thevarunshah.trianglealgorithmvisualization";
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                try{
-                    i.setData(Uri.parse("market://details?id=" + appPackageName));
-                    startActivity(i);
-                } catch(ActivityNotFoundException e){
-                    try{
-                        i.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName));
-                        startActivity(i);
-                    } catch (ActivityNotFoundException e2){
-                        Snackbar errorBar = Snackbar.make(findViewById(R.id.gradient_visualization_activity),
-                                "Could not launch the Google Play app.", Snackbar.LENGTH_SHORT);
-                        errorBar.show();
-                    }
-                }
-            }
-        });
-        infoDialogBuilder.setNegativeButton("DISMISS", null);
-
-        //create and show the dialog
-        AlertDialog infoDialog = infoDialogBuilder.create();
-        infoDialog.show();
     }
 }

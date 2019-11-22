@@ -49,7 +49,7 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     /**
-     * display app information and prompt them to rate/buy it.
+     * display app information and prompt them to rate it.
      */
     private void displayAboutDialog(){
 
@@ -68,32 +68,11 @@ public class HomeScreen extends AppCompatActivity {
         message.setMovementMethod(LinkMovementMethod.getInstance());
 
         //set up actions for dialog buttons
-        infoDialogBuilder.setPositiveButton("RATE", new DialogInterface.OnClickListener() {
+        infoDialogBuilder.setPositiveButton("RATE APP", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int whichButton) {
 
                 String appPackageName = getApplicationContext().getPackageName();
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                try{
-                    i.setData(Uri.parse("market://details?id=" + appPackageName));
-                    startActivity(i);
-                } catch(ActivityNotFoundException e){
-                    try{
-                        i.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName));
-                        startActivity(i);
-                    } catch (ActivityNotFoundException e2){
-                        Snackbar errorBar = Snackbar.make(findViewById(R.id.homescreen_activity),
-                                "Could not launch the Google Play app.", Snackbar.LENGTH_SHORT);
-                        errorBar.show();
-                    }
-                }
-            }
-        });
-        infoDialogBuilder.setNeutralButton("BUY", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int whichButton) {
-
-                String appPackageName = "com.thevarunshah.trianglealgorithmvisualization";
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 try{
                     i.setData(Uri.parse("market://details?id=" + appPackageName));

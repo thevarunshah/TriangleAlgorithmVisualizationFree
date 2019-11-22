@@ -3,7 +3,6 @@
     <group android:checkableBehavior="all">
         <item
             android:id="@+id/disply_bisectors"
-            android:title="@string/display_bisectors"
-            android:checked="true"/>
+            android:title="@string/display_bisectors"/>
     </group>
 </menu>
